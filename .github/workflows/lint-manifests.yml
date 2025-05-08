@@ -1,0 +1,21 @@
+name: Lint Manifests
+on: [push]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4  # Check out the repo
+      
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3  # Install kubectl
+        with:
+          version: 'latest'  # Or pin to a specific version like 'v1.28.0'
+      
+      - name: Validate Kubernetes Manifests
+        run: |
+          # Check YAML syntax for all manifests
+          find ./apps -type f \( -name "*.yaml" -o -name "*.yml" \) -exec kubectl apply --dry-run=client -f {} \;
+          
+          #  Validate against a live cluster 
+          # kubectl apply -f ./apps/ --dry-run=server
