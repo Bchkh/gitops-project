@@ -5,7 +5,11 @@ jobs:
   scan:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'nginx:1.25-alpine'
+          severity: 'CRITICAL'
+          exit-code: '0'
 
       - name: Install Trivy
         run: |
@@ -18,4 +22,4 @@ jobs:
 
       - name: Scan Nginx Image
         run: |
-          trivy image --exit-code 1 --severity CRITICAL --ignore-unfixed nginx:1.25.4-alpine
+          trivy image --exit-code 1 --severity CRITICAL --ignore-unfixed nginx:1.25.3-alpine
