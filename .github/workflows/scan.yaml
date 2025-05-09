@@ -1,0 +1,12 @@
+
+name: Image Scan
+on: [push]
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Scan Nginx Image
+      run: |
+        docker pull nginx:1.25.3-alpine
+        trivy image --exit-code 1 --severity CRITICAL nginx:1.25.3-alpine
