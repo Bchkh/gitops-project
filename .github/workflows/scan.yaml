@@ -22,4 +22,4 @@ jobs:
 
       - name: Scan Nginx Image
         run: |
-          trivy image --exit-code 1 --severity CRITICAL --ignore-unfixed nginx:1.25.3-alpine
+          trivy image --exit-code 1 --severity HIGH --ignore-unfixed nginx:1.25.3-alpine
